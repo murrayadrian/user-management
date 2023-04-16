@@ -1,0 +1,263 @@
+<html lang="en-US">
+
+<head>
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ip {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        #btn, #resetForm {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        #btn:hover, #resetForm:hover {
+            opacity: 0.8;
+        }
+
+        textarea {
+            resize: none;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .form_content {
+            width: 80%;
+            padding: 40px;
+        }
+
+        header {
+            background: #dddddd;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #dddddd;
+            padding: 10px;
+        }
+
+        .sidebar {
+            width: 20%;
+            border: 1px solid #dddddd;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .searchBar {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+
+        }
+
+        .searchBar input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid grey;
+        }
+
+        .searchBar button {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid grey;
+            border-left: none;
+            background: white;
+        }
+
+        .view,
+        .content {
+            color: #2196F3;
+            padding: 10px;
+            transition: 0.5s;
+        }
+
+        .view:hover,
+        .content:hover {
+            background: #dddddd;
+        }
+
+        a {
+            text-decoration: none;
+        }
+        .child {
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #dddddd;
+            padding-bottom:20px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 10px;
+            top: 45px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .dropbtn {
+            cursor: pointer;
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3>CMS</h3>
+        <div class="dropdown">
+            <div class="dropbtn" onclick="myFunction()">
+                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="dropdown-content" id="myDropdown">
+                <p>
+                    <i class="fa-solid fa-user"></i>
+                    <a href="editProfile.html">User Profile</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <a href="index.html">Log out</a>
+                </p>
+
+            </div>
+        </div>
+
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <form class="searchBar">
+                <input type="text" placeholder="Search.." name="search">
+                <button><i class="fa fa-search"></i></button>
+            </form>
+
+            <br>
+            <div class="view">
+                <i class="fa-solid fa-table-cells"></i>
+                <a href="viewContent.html">View contents</a>
+            </div>
+            <div class="content">
+                <i class="fa-solid fa-table-cells"></i>
+                <a href="formContent.html">Form content</a>
+            </div>
+        </div>
+
+        <div class="form_content">
+            <p style="font-size:40px">Edit Profile</p>
+            <hr>
+            <div class="child">
+                <div style="background:#dddddd; padding:10px;border-bottom: 1px solid #dddddd;">
+                    <h3>Profile Form Elements</h3>
+                </div>
+                <form id ="form" style="padding:15px">
+                    <label style="font-weight:bold">First Name</label>
+                    <input class="ip" type="text" id="fname" placeholder="Enter the first name">
+
+                    <label style="font-weight:bold">Last Name</label>
+                    <input class="ip" type="text" id="lname" placeholder="Enter the last name">
+
+                    <label style="font-weight:bold">Phone Number</label>
+                    <input class="ip" type="text" placeholder="Enter phone number">
+
+                    <label style="font-weight:bold">Date of birth</label>
+                    <input class="ip" type="date">
+
+                    <label style="font-weight:bold">Gender</label>
+                    <fieldset class="ip">
+                        <input type="radio" id="female">
+                        <label for="female">Female</label>
+                        <input type="radio" id="male">
+                        <label for="male">Male</label>
+                    </fieldset>
+
+                    <label style="font-weight:bold">Account</label>
+                    <input class="ip" type="text">
+
+                    <label style="font-weight:bold">Email</label>
+                    <input class="ip" type="text">
+
+                    <label style="font-weight:bold">Password</label>
+                    <input class="ip" type="text">
+
+                    <label style="font-weight:bold">Address</label>
+                    <textarea rows= "8" cols="50"></textarea>
+
+                    <label style="font-weight:bold">Status</label>
+                    <fieldset class="ip">
+                        <input type="radio" id="active">
+                        <label for="female">Active</label>
+                    </fieldset>
+
+                    <label style="font-weight:bold">Department</label>
+                    <input class="ip" type="text">
+
+                    <label style="font-weight:bold">Remark</label>
+                    <input class="ip" type="text">
+                    
+                    <button id="btn" type="button">Submit</button>
+                    <button id="resetForm" type="reset">Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var btn = document.getElementById("btn");
+    var form = document.getElementById("form");
+    window.onload = function(){
+
+        var key = Object.keys(sessionStorage);
+        var item;
+        for(let i = 0;i<key.length;i++){
+            var temp = sessionStorage.getItem(key[i]);
+            if(JSON.parse(temp).ischecked === true){
+                item = key[i];
+            }
+        }
+     
+        var p = document.createElement("p");
+        var t = document.createTextNode(item);
+        p.appendChild(t);
+        var insert = document.getElementById("insert");
+        form.insertBefore(p,insert);
+    }
+
+    btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        form.reset();
+    })
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+</script>
+
+</html>

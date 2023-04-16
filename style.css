@@ -1,0 +1,35 @@
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=reset] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#btn:hover {
+    opacity: 0.8;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+form {
+    width: 30%;
+    margin: 0 auto;
+}

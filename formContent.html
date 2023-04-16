@@ -1,0 +1,263 @@
+<html lang="en-US">
+
+<head>
+    <title>Form Content</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        #title {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        #btn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        #btn:hover {
+            opacity: 0.8;
+        }
+
+        textarea {
+            resize: none;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .form_content {
+            width: 80%;
+            padding: 40px;
+        }
+
+        header {
+            background: #dddddd;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #dddddd;
+            padding: 10px;
+        }
+
+        .sidebar {
+            width: 20%;
+            border: 1px solid #dddddd;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .searchBar {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+
+        }
+
+        .searchBar input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid grey;
+        }
+
+        .searchBar button {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid grey;
+            border-left: none;
+            background: white;
+        }
+
+        .view,
+        .content {
+            color: #2196F3;
+            padding: 10px;
+            transition: 0.5s;
+        }
+
+        .view:hover,
+        .content:hover {
+            background: #dddddd;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .child {
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #dddddd;
+            padding-bottom: 20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 10px;
+            top: 45px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .dropbtn {
+            cursor: pointer;
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3>CMS</h3>
+        <div class="dropdown">
+            <div class="dropbtn" onclick="myFunction()">
+                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="dropdown-content" id="myDropdown">
+                <p>
+                    <i class="fa-solid fa-user"></i>
+                    <a href="editProfile.html">User Profile</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <a href="index.html">Log out</a>
+                </p>
+
+            </div>
+        </div>
+
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <form class="searchBar">
+                <input type="text" placeholder="Search.." name="search">
+                <button><i class="fa fa-search"></i></button>
+            </form>
+
+            <br>
+            <div class="view">
+                <i class="fa-solid fa-table-cells"></i>
+                <a href="viewContent.html">View contents</a>
+            </div>
+            <div class="content">
+                <i class="fa-solid fa-table-cells"></i>
+                <a href="formContent.html">Form content</a>
+            </div>
+        </div>
+
+        <div class="form_content">
+            <p style="font-size:40px">Add Content</p>
+            <hr>
+            <div class="child">
+                <div style="background:#dddddd; padding:10px;border-bottom: 1px solid #dddddd;">
+                    <h3>Content Form Elements</h3>
+                </div>
+                <form id="form" style="padding:15px">
+                    <label for="title" style="font-weight:bold">Title</label>
+                    <input type="text" name="title" id="title" placeholder="Enter the title">
+
+                    <label style="font-weight:bold">Brief</label>
+                    <textarea rows="4" cols="50" id="brief" placeholder=""></textarea>
+
+                    <p><label style="font-weight:bold">Content</label></p>
+                    <textarea rows="8" cols="50" id="textarea"></textarea>
+
+                    <button id="btn" type="button">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    let bucket = new Map();
+    let arr = [];
+    var btn = document.getElementById("btn");
+    var form = document.getElementById("form");
+
+    var item;
+
+    window.onload = function () {
+        var key = Object.keys(sessionStorage);
+        for (let i = 0; i < key.length; i++) {
+            var temp = sessionStorage.getItem(key[i]);
+            if (JSON.parse(temp).ischecked === true) {
+                item = key[i];
+            }
+        }
+        let x = JSON.parse(localStorage.getItem(item));
+        arr = x !== null ? x : [];
+    }
+
+    btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        let title = document.getElementById("title").value;
+        let brief = document.getElementById("brief").value;
+        let text = document.getElementById("textarea").value;
+
+        form.reset();
+
+        if (title === "") alert("title cannot be empty");
+        else {
+            let today = new Date();
+
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            let yyyy = today.getFullYear();
+            let hour = today.getHours();
+            let min = today.getMinutes();
+
+            if (dd < 10) dd = "0" + dd;
+            if (mm < 10) mm = "0" + mm;
+            if (hour < 10) hour = "0" + hour;
+            if (min < 10) min = "0" + min;
+
+            let result = `${dd}/${mm}/${yyyy}   ${hour}:${min}`;
+
+            let obj = { "title": title, "brief": brief, "text": text, "date": result };
+
+            bucket.set(item, arr);
+            bucket.get(item).push(obj);
+
+            bucket.forEach(function (value, key) {
+                localStorage.setItem(key, JSON.stringify(value));
+            })
+        }
+
+
+    })
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+</script>
+
+</html>

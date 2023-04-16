@@ -1,0 +1,87 @@
+<html lang="en-US">
+
+<head>
+    <title>index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form onsubmit="handleSubmit(event)">
+        <div class="container">
+            <h2>Please Sign In</h2>
+            <input id="email" type="email" value="" placeholder="Email" name="email" required>
+
+            <input id="pass" type="password" value="" placeholder="Password" name="password" required>
+
+            <button id="btn">Login</button>
+            <label>
+                <input type="checkbox" value="remembered" name="remember" id="rememberMe"> Remember me
+            </label>
+            <br>
+            <br>
+            <a href="register.html">Click here to register</a>
+        </div>
+    </form>
+</body>
+
+<script>
+   
+    let bucket = [];
+    let checkedBtn = document.getElementById("rememberMe");
+
+    window.onload = function () {
+        let key = Object.keys(sessionStorage);
+        let i = key.length;
+
+        while (i--) {
+            bucket.push({
+                email: key[i],
+                username: JSON.parse(sessionStorage.getItem(key[i])).username,
+                password: JSON.parse(sessionStorage.getItem(key[i])).password,
+                ischecked: JSON.parse(sessionStorage.getItem(key[i])).ischecked
+            });
+        }
+        let search = bucket.find((obj) => obj.ischecked === true);
+
+        if (search !== undefined) {
+            document.getElementById("email").value = search.email;
+            document.getElementById("pass").value = search.password;
+            document.getElementById("rememberMe").checked = search.ischecked;
+        } else {
+            document.getElementById("email").value = "";
+            document.getElementById("pass").value = "";
+            document.getElementById("rememberMe").checked = "";
+        }
+
+
+    }
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        let mailInput = document.getElementById("email").value;
+        let passInput = document.getElementById("pass").value;
+        let ischecked = document.getElementById("rememberMe").checked;
+
+        let search = bucket.find((obj) => obj.email === mailInput && obj.password === passInput);
+        let existed = bucket.find((obj) => obj.ischecked === true);
+        if (search === undefined) {
+            alert("Wrong email or password");
+        }
+        else {
+            if (existed) {
+                let removeCheck = JSON.parse(sessionStorage.getItem(existed.email));
+                removeCheck.ischecked = false;
+                sessionStorage.setItem(existed.email, JSON.stringify(removeCheck));
+            }
+
+            let update = JSON.parse(sessionStorage.getItem(search.email));
+            update.ischecked = ischecked;
+            sessionStorage.setItem(search.email, JSON.stringify(update));
+            window.location.href="./viewContent.html";
+        }
+
+    }
+</script>
+
+</html>

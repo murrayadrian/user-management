@@ -1,0 +1,47 @@
+<html lang="en-US">
+<head>
+    <title>register</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form onsubmit="handleSubmit(event)">
+        <div class="container">
+            <h2>Register</h2>
+            <input id="username" type="text" placeholder="User name" autofocus="autofocus" required/>
+
+            <input id="mail" type="email" placeholder="E-mail" name="email" required/>
+
+            <input id="pass" type="password" placeholder="Password" name="password" required/>
+
+            <input id="repass" type="text" placeholder="Re password" name="repassword" required/>
+
+            <button type="submit" id="btn">Register</button>
+            <br>
+            <br>
+            <a id="direct" href="index.html">Click here to login</a>
+        </div>
+    </form>
+</body>
+
+<script>
+    function handleSubmit(e) {
+        e.preventDefault();
+        let username = document.getElementById("username").value;
+        let email = document.getElementById("mail").value;
+        let pass = document.getElementById("pass").value;
+        let repass = document.getElementById("repass").value;
+     
+        if (pass == repass) {
+            const obj = {"username":username,"password":pass,"ischecked":false};
+            sessionStorage.setItem(email,JSON.stringify(obj));
+            document.location.href = './index.html';
+            
+        } else {
+            alert("Please input pass again");
+        }
+    }
+</script>
+
+</html>

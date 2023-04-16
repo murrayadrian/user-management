@@ -1,0 +1,234 @@
+<html lang="en-US">
+
+<head>
+    <title>View Content</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .viewTable {
+            width: 80%;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        header {
+            background: #dddddd;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #dddddd;
+            padding: 10px;
+        }
+
+        .child {
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #dddddd;
+            padding-bottom: 20px;
+        }
+
+        .sidebar {
+            width: 20%;
+            border: 1px solid #dddddd;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .searchBar {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+
+        }
+
+        .searchBar input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid grey;
+        }
+
+        .searchBar button {
+            width: 20%;
+            padding: 10px;
+            border: 1px solid grey;
+            border-left: none;
+            background: white;
+        }
+
+        .view,
+        .content {
+            color: #2196F3;
+            padding: 10px;
+            transition: 0.5s;
+        }
+
+        .view:hover,
+        .content:hover {
+            background: #dddddd;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 10px;
+            top: 45px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .dropbtn {
+            cursor: pointer;
+            background-color: #dddddd;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h3>CMS</h3>
+        <div class="dropdown">
+            <div class="dropbtn" onclick="myFunction()">
+                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="dropdown-content" id="myDropdown">
+                <p>
+                    <i class="fa-solid fa-user"></i>
+                    <a href="editProfile.html">User Profile</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <a href="index.html">Log out</a>
+                </p>
+
+            </div>
+        </div>
+
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <form class="searchBar">
+                <input type="text" placeholder="Search.." name="search">
+                <button><i class="fa fa-search"></i></button>
+            </form>
+
+            <br>
+            <div class="view">
+                <i class="fa-solid fa-table-cells"></i>
+                <a href="viewContent.html">View contents</a>
+            </div>
+            <div class="content">
+                <i class="fa-solid fa-table-cells"></i>
+                <a href="formContent.html">Form content</a>
+            </div>
+        </div>
+        <div class="viewTable">
+            <p style="font-size:40px">View Content</p>
+            <hr>
+            <div class="child">
+                <div style="background:#dddddd; padding:10px;border-bottom: 1px solid #dddddd;">
+                    <p>View Content List</p>
+                </div>
+                <div style="padding:15px">
+                    <table id="contentTable" style="width:100%">
+                        <tr>
+                            <th style="width:5%">#</th>
+                            <th style="width:20%">Title</th>
+                            <th style="width:45%">Brief</th>
+                            <th style="width:25%">Created Date</th>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var item;
+    window.onload = function () {
+       
+        var key = Object.keys(sessionStorage);
+        for (let i = 0; i < key.length; i++) {
+            var temp = sessionStorage.getItem(key[i]);
+            if (JSON.parse(temp).ischecked === true) {
+                item = key[i];
+            }
+        }
+        let x = JSON.parse(localStorage.getItem(item));
+        let values = x !== null ? x : [];
+
+        createData(values);
+    }
+
+    function createData(values) {
+        for (var i = 0; i < values.length; i++) {
+            var title = values[i].title;
+            var brief = values[i].brief;
+            var text = values[i].text;
+            var date = values[i].date;
+
+            addToTable(i + 1, title, brief, date);
+        }
+    }
+
+    function addToTable(count, title, brief, date) {
+        let row = $('<tr>')
+            .append($("<td>").text(count))
+            .append($("<td>").text(title))
+            .append($("<td>").text(brief))
+            .append($("<td>").text(date));
+
+        $("#contentTable").append(row);
+    }
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+
+</script>
+
+</html>
